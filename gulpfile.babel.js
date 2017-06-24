@@ -32,11 +32,11 @@ const paths = {
   },
   styles: {
     src: 'src/assets/**/*.css',
-    dest: 'build/assets/styles/'
+    dest: 'build/styles/'
   },
   scripts: {
    src: 'src/assets/**/*.js',
-   dest: 'build/assets/scripts' 
+   dest: 'build/scripts'
   }
 }
 

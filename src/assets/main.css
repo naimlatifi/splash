@@ -2,14 +2,52 @@
 
 :root {
   --brandGreen: hsl(120,100%,50%);
-
   --brandBlack: hsl(0,0%,1.2%);
+
   --fontMerri: 'Merriweather', serif;
   --fontIconsolata: 'Inconsolata', monospace;
   --fontMonacoFull: monaco, Consolas, 'Lucida Console', monospace;
+
+  --fontBase: normal 400 1.2rem/1.5 var(--fontMonacoFull);
+  --fontHeading: normal 400 2.4rem/1.5 var(--fontMonacoFull);;
 }
 
 
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
 body {
-  background-color: black;
+  display: grid;
+  background-color: var(--brandBlack);
+  color: white;
+  font: var(--fontBase);
+}
+
+h1 {
+  color: var(--brandGreen);
+  font: var(--fontHeading);
+}
+
+
+/* Resets */
+body {
+  padding: 0;
+  margin: 0 auto;
+}
+
+ul, li {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
 }
