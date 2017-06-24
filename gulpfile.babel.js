@@ -1,12 +1,29 @@
-import gulp     from 'gulp';
-import babel    from 'gulp-babel';
-import cleanCSS from 'gulp-clean-css';
-import concat   from 'gulp-concat';
-import rename   from 'gulp-rename';
-import sass     from 'gulp-sass';
-import uglify   from 'gulp-uglify';
-import del      from 'del';
+import browserSync from 'browser-sync';
+import gulp        from 'gulp';
+import babel       from 'gulp-babel';
+import cleanCSS    from 'gulp-clean-css';
+import concat      from 'gulp-concat';
+import rename      from 'gulp-rename';
+import sass        from 'gulp-sass';
+import uglify      from 'gulp-uglify';
+import del         from 'del';
 
+
+const server = browserSync.create();
+
+const reload = (done) => {
+  server.reload();
+  done();
+}
+
+const serve = (done) => {
+  server.init({
+    server: {
+      baseDir: './build'
+    }
+  })
+  done();
+}
 
 const paths = {
   templates: {
@@ -32,7 +49,7 @@ const templates = () => {
 
 const styles = () => {
   return gulp.src(paths.styles.src)
-    .pipe(sass())
+    .pipe(sass().on('error', sass.logError))
     .pipe(cleanCSS())
     .pipe(rename({
       basename: 'main',
@@ -52,13 +69,14 @@ const scripts = () => {
 
 
 const watch = () => {
-  gulp.watch(paths.templates.src, templates);
-  gulp.watch(paths.styles.src, styles);
-  gulp.watch(paths.scripts.src, scripts);
+  gulp.watch(paths.templates.src, gulp.series(templates, reload));
+  gulp.watch(paths.styles.src, gulp.series(styles, reload));
+  gulp.watch(paths.scripts.src, gulp.series(scripts, reload));
 }
 
 const clean = () => del([ 'build' ]);
 
-const build = gulp.series(clean, gulp.parallel(templates, styles, scripts));
+const dev = gulp.series(clean, templates, styles, scripts, serve, watch);
 
-export { build, templates, styles, scripts, watch, clean }
+export default dev;
+export { templates, styles, scripts, clean };

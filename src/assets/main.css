@@ -8,3 +8,8 @@
   --fontIconsolata: 'Inconsolata', monospace;
   --fontMonacoFull: monaco, Consolas, 'Lucida Console', monospace;
 }
+
+
+body {
+  background-color: black;
+}
