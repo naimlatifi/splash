@@ -7,6 +7,7 @@ import rename      from 'gulp-rename';
 import sass        from 'gulp-sass';
 import uglify      from 'gulp-uglify';
 import del         from 'del';
+import browserify  from 'gulp-browserify';
 
 
 const server = browserSync.create();
@@ -62,6 +63,9 @@ const styles = () => {
 const scripts = () => {
   return gulp.src(paths.scripts.src, { sourcemaps: true })
     .pipe(babel())
+    .pipe(browserify({
+     insertGlobals: true
+     }))
     .pipe(uglify())
     .pipe(concat('main.min.js'))
     .pipe(gulp.dest(paths.scripts.dest));
